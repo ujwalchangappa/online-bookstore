@@ -6,6 +6,18 @@ pipeline {
               	    echo "cloning repository" 
               	    echo "repo cloned successfully"  
               	    }  
-         	    } 
+         	    }
+		    stage("Build") {
+		    steps {
+		    sh "mvn clean package"
+		    }
+		   }
+		   stage("test") {
+		   steps {
+		   sh "mvn test"
+		   }
+		    }
+
+
         }
 }
