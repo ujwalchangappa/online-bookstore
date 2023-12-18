@@ -14,7 +14,7 @@ pipeline {
 		       }
 		stage('Deploy to Tomcat') {
      steps { 
-	     sh "copy /target/onlinebookstore.war /opt/tomcat/webapps
+	     sh "cp /target/onlinebookstore.war /opt/tomcat/webapps"
 		}
                }
             }
