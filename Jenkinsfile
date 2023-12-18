@@ -12,5 +12,9 @@ pipeline {
 		    sh "mvn clean package"
 		    }
 		       }
+		stage('Deploy to Tomcat') {
+     steps { 
+	     bat "copy /target/onlinebookstore.war /opt/tomcat/webapps
+		}
                }
             }
