@@ -7,6 +7,21 @@ pipeline {
               	    echo "repo cloned successfully"  
               	    }  
          	    }
+		stage("Sonarqube Analysis "){
+             steps{
+                 withSonarQubeEnv('SonarQube-Server') {
+                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=online-bookstore \
+                     -Dsonar.projectKey=online-bookstore '''
+                 }
+             }
+         }
+		stage("Quality Gate"){
+            steps {
+                 script {
+                     waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube-Token' 
+                 }
+             } 
+         }
 		    stage("Build") {
 		    steps {
 		    sh "mvn clean package"
