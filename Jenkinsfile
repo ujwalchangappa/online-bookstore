@@ -7,6 +7,11 @@ pipeline {
               	    echo "repo cloned successfully"  
               	    }  
          	    }
+		    stage("Build") {
+		    steps {
+		    sh "mvn clean package"
+		    }
+		       }
 		stage("Sonarqube Analysis "){
              steps{
                  withSonarQubeEnv('SonarQube-Server') {
@@ -22,11 +27,6 @@ pipeline {
                  }
              } 
          }
-		    stage("Build") {
-		    steps {
-		    sh "mvn clean package"
-		    }
-		       }
 		stage('Deploy to Tomcat') {
      steps { 
 	     sh "cp /var/lib/jenkins/workspace/Online-Bookstore/target/onlinebookstore.war /opt/tomcat/webapps"
