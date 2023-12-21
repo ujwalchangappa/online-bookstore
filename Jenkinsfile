@@ -15,7 +15,7 @@ pipeline {
 		stage("Sonarqube Analysis "){
              steps{
                  withSonarQubeEnv('SonarQube-Server') {
-                     sh ''' $SCANNER_HOME/bin/bash -Dsonar.projectName=online-bookstore \
+                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=online-bookstore \
                      -Dsonar.projectKey=online-bookstore '''
                  }
              }
