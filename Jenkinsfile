@@ -12,6 +12,21 @@ pipeline {
 		    sh "mvn clean package"
 		    }
 		       }
+		stage("Sonarqube Analysis "){
+             steps{
+                 withSonarQubeEnv('SonarQube-Server') {
+                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=online-bookstore \
+                     -Dsonar.projectKey=online-bookstore '''
+                 }
+             }
+         }
+		stage("Quality Gate"){
+            steps {
+                 script {
+                     waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube-Token' 
+                 }
+             } 
+         }
 	
 		stage('Deploy to Tomcat') {
      steps { 
