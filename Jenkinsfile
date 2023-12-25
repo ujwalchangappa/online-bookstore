@@ -16,7 +16,7 @@ pipeline {
                steps {
         withSonarQubeEnv(installationName: 'SonarQube') { 
      //  sh "mvn clean verify sonar:sonar -Dsonar.login=sonarqube"
-		sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+		sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
         }
       }
     }
