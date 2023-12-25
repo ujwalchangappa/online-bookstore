@@ -16,17 +16,17 @@ pipeline {
                steps {
         withSonarQubeEnv(installationName: 'SonarQube') { 
      //  sh "mvn clean verify sonar:sonar -Dsonar.login=sonarqube"
-		sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+		sh './mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
         }
       }
     }
-		stage("Quality Gate"){
-            steps {
-                 script {
-                     waitForQualityGate abortPipeline: false, credentialsId: 'sonarqube' 
-                 }
-             } 
-         }
+		stage("Quality Gate") {
+      steps {
+        timeout(time: 2, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
 	
 		stage('Deploy to Tomcat') {
      steps { 
