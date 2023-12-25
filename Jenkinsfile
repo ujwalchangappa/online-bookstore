@@ -29,6 +29,7 @@ pipeline {
             }
         }
       }
+	}
 		stage('Deploy to Tomcat') {
      steps { 
 	     sh "cp /var/lib/jenkins/workspace/Online-Bookstore/target/onlinebookstore.war /opt/tomcat/webapps"
