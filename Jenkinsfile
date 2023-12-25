@@ -20,10 +20,14 @@ pipeline {
         }
       }
     }
-		stage("Quality Gate") {
+		stage('SonarQube analysis') {
       steps {
-        timeout(time: 5, unit: 'MINUTES') {
-          waitForQualityGate abortPipeline: true
+        script {
+          // requires SonarQube Scanner 2.8+
+          sonar-scanner = tool 'SonarQube Scanner 5.0.1.3006'
+        }
+        withSonarQubeEnv('sonar-scanner) {
+          sh "${sonar-scanner}/bin/sonar-scanner"
         }
       }
     }
