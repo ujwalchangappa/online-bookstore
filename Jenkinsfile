@@ -13,13 +13,12 @@ pipeline {
 		    }
 		       }
 		stage("Sonarqube Analysis "){
-             steps{
-                 withSonarQubeEnv('SonarQube-Server') {
-                     sh ''' /bin/sonar-scanner -Dsonar.projectName=online-bookstore \
-                     -Dsonar.projectKey=online-bookstore '''
-                 }
-             }
-         }
+               steps {
+        withSonarQubeEnv(installationName: 'SonarQube') { 
+       sh mvn clean verify sonar:sonar -Dsonar.login=squ_41d992f7cfadf0df0e4cc8a37f80a3d4eb9641dc
+        }
+      }
+    }
 		stage("Quality Gate"){
             steps {
                  script {
