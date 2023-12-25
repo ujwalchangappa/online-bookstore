@@ -23,7 +23,7 @@ pipeline {
 	stage("Quality gate") {
 		steps {
         script {
-            def scannerHome = tool 'SonarQube Scanner 2.8';
+            def scannerHome = tool 'Sonarscanner';
             withSonarQubeEnv("sonarscanner") {
               sh "${scannerHome}/bin/sonar-scanner"
             }
