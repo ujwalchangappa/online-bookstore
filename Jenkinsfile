@@ -24,10 +24,10 @@ pipeline {
       steps {
         script {
           // requires SonarQube Scanner 2.8+
-          sonar-scanner = tool 'SonarQube Scanner 5.0.1.3006'
+          sonarscanner = tool 'SonarQube Scanner 5.0.1.3006'
         }
-        withSonarQubeEnv('sonar-scanner') {
-          sh "${sonar-scanner}/bin/sonar-scanner"
+        withSonarQubeEnv('sonarscanner') {
+          sh "${sonarscanner}/bin/sonarscanner"
         }
       }
     }
