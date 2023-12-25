@@ -20,18 +20,15 @@ pipeline {
         }
       }
     }
-		stage('SonarQube analysis') {
-      steps {
+	stage("Quality gate") {
+		steps {
         script {
-          // requires SonarQube Scanner 2.8+
-          sonarscanner = tool 'SonarQube Scanner 5.0.1.3006'
-        }
-        withSonarQubeEnv('sonarscanner') {
-          sh "${sonarscanner}/bin/sonarscanner"
+            def scannerHome = tool 'SonarQube Scanner 2.8';
+            withSonarQubeEnv("sonarscanner") {
+              sh "${scannerHome}/bin/sonar-scanner"
+            }
         }
       }
-    }
-	
 		stage('Deploy to Tomcat') {
      steps { 
 	     sh "cp /var/lib/jenkins/workspace/Online-Bookstore/target/onlinebookstore.war /opt/tomcat/webapps"
