@@ -9,7 +9,7 @@ environment {
    
 }   
   tools {
-    mvn '3.6.3'
+    mvn '3.9.6'
   }
   stages {
     stage('Cloning Git') {
