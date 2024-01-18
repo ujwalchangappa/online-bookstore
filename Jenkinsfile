@@ -8,9 +8,7 @@ environment {
    IMAGE_URL='hub.docker.com'
    
 }   
-  tools {
-    maven '3.9.6'
-  }
+ 
   stages {
     stage('Cloning Git') {
       steps {
