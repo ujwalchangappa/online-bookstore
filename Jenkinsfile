@@ -1,5 +1,12 @@
 pipeline {  
     agent any  
+	environment { 
+   NAME = "onlinebookstore"
+   VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
+   IMAGE = "${NAME}:${VERSION}"
+   IMAGE_REPO="bookstore"
+   IMAGE_URL='hub.docker.com'
+   }   
         stages {  
        	    stage("git_checkout") {  
            	    steps {  
