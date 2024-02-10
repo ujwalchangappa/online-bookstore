@@ -42,20 +42,25 @@ pipeline {
 	//     sh "cp /var/lib/jenkins/workspace/Online-Bookstore/target/onlinebookstore.war /opt/tomcat/webapps"
 	//	}
 	//	  }
-		stage('Build and Push Docker Image') {
-      environment {
-        DOCKER_IMAGE = "ujwal30/bookstore:${BUILD_NUMBER}"
-        REGISTRY_CREDENTIALS = credentials('docker-cred')
-      }
-      steps {
-        script {
-            sh 'cd /var/lib/jenkins/workspace/Online-Bookstore/ && docker build -t ${DOCKER_IMAGE} .'
-            def dockerImage = docker.image("${DOCKER_IMAGE}")
-            docker.withRegistry('https://index.docker.io/v1/', "docker-cred") {
-                dockerImage.push()
-            }
+		 stage('Build result') {
+     steps {
+            echo "Running ${VERSION} on ${env.JENKINS_URL}"
+            //git branch: "${env.BRANCH_NAME}", url: 'https://github.com/Hemantakumarpati/OnlineBookStore.git'
+            //echo "for brnach ${env.BRANCH_NAME}"
+            sh "docker build -t ${NAME} ."
+            sh "docker tag ${NAME}:latest ${IMAGE_REPO}/${NAME}:${VERSION}"
         }
-      } }
+    } 
+		stage('Push result image') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'docker_cred', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+          sh "docker push ${IMAGE_REPO}/${NAME}:${VERSION}"
+           
+        }
+      }
+    }
+    
 			 stage('Integrate Jenkins with EKS Cluster and Deploy App') {
             steps {
                 withAWS(credentials: 'aws', region: 'us-east-1') {
