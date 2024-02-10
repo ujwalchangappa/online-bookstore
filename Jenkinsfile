@@ -4,7 +4,7 @@ pipeline {
    NAME = "onlinebookstore"
    VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
    IMAGE = "${NAME}:${VERSION}"
-   IMAGE_REPO="bookstore"
+   IMAGE_REPO="ujwal30"
    IMAGE_URL='hub.docker.com'
    }   
         stages {  
